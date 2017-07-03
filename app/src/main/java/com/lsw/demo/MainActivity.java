@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 1.发布线程为主线程，新开线程调用
     // 2.发布线程为子线程，发布线程调用
+    // 不能并发处理
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void eventBusBg(String str){
         Log.i("TAG", "BACKGROUND:"+str+" Thread="+Thread.currentThread().getId());
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("TAG", "POSTING:"+str+" Thread="+Thread.currentThread().getId());
     }
 
-    // 每次都新开线程调用
+    // 每次都新开线程调用（可以并发处理）
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void eventBusAsync(String str){
         Log.i("TAG", "ASYNC:"+str+" Thread="+Thread.currentThread().getId());
