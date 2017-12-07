@@ -3,26 +3,28 @@ package com.lsw.demo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class SecondActivity extends AppCompatActivity {
+    private Button btn_send;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-        EventBus.getDefault().post("from second activity mainThread: info");
+        btn_send = (Button) findViewById(R.id.btn_send);
 
-        Log.i("TAG", "Post thread="+Thread.currentThread().getId());
 
-        new Thread(new Runnable() {
+        btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                EventBus.getDefault().post("from second activity childThread: info");
-                Log.i("TAG", "Post thread="+Thread.currentThread().getId());
+            public void onClick(View v) {
+                //发送消息
+                EventBus.getDefault().post(new FirstEvent("eventbus3.0测试"));
             }
-        }).start();
+        });
     }
 }
