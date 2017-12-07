@@ -16,22 +16,33 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn_skip;
     TextView tv_message;
+    Button btn_sticky;
+    TextView tv_sticky_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
 
         btn_skip = (Button) findViewById(R.id.btn_skip);
+        btn_sticky = (Button) findViewById(R.id.btn_sticky);
 
         tv_message = (TextView) findViewById(R.id.tv_message);
+        tv_sticky_message = (TextView) findViewById(R.id.tv_sticky_message);
 
         btn_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SecondActivity.class));
+            }
+        });
+
+        btn_sticky.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().register(MainActivity.this);
             }
         });
 
@@ -41,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(sticky = true)
+    public void handleStickyEvent(FirstEvent firstEvent){
+        tv_sticky_message.setText(firstEvent.getMsg());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
