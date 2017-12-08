@@ -26,6 +26,8 @@ public class SecondActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //发送消息
                 EventBus.getDefault().post(new FirstEvent("eventbus3.0测试"));
+
+//                EventBus.getDefault().post(new FirstEvent("eventbus3.0测试优先级"));
             }
         });
 

@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
         tv_sticky_message.setText(firstEvent.getMsg());
     }
 
+/*    @Subscribe(priority = 1)
+    public void handlePriorityEvent(FirstEvent firstEvent){
+        tv_sticky_message.setText(firstEvent.getMsg());
+    }*/
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleEvent(FirstEvent firstEvent){
         tv_message.setText(firstEvent.getMsg());
